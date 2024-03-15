@@ -1,0 +1,25 @@
+have a register of product types and product categories. Tpyes = bread, milk. categories = food, drinks
+
+have fields for the income of the month.
+have fields for the expenses of the month.
+
+have fields for continues income and expenses, that will happen for the entire year. however they must be editable, and do not change if the prices change in a month after.
+list substribtion seperatly in a dedicated thing
+have an option to update continues expensees/income in this month, and all following months (will overwrite if already saved)
+
+have fields for irregular normal expenses (like food)
+
+have fields for comm expense.
+have fields for allocated comm budget and comm budget over/under flow from last months
+
+donation thing
+
+have field for birthday expenses.
+
+have output of income-expense.
+have forcast for the year
+
+have the option to send money to the saving/investment screen. its like an expense, but the money may be returned to monthly income, or used to buy something.
+important: allow the user to store the saving/investment reason. also allow auto allocation.
+
+have graph for monthly profit and yearly profit.
