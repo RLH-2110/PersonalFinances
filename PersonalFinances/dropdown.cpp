@@ -1,5 +1,7 @@
-#include "dropdown.h";
+#include "includes.h";
+
 using sf::Vector2i;
+using sf::Vector2f;
 using std::string;
 using std::vector;
 
@@ -30,6 +32,9 @@ Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string *
 		this->titleStrings[i] = titleStrings[i];
 	}
 
+	fontData = stdFont;
+
+	generateRenderInfo();
 }
 
 Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements) 
@@ -67,4 +72,50 @@ Dropdown::~Dropdown() {
 
 }
 
+
+void Dropdown::generateRenderInfo() {
+
+	puts("dont forget to test generateRenderInfo()!");
+
+	sf::Text sizeFinder;
+	sizeFinder.setFont(fontData.font);
+	sizeFinder.setStyle(fontData.style);		
+	sizeFinder.setCharacterSize(fontData.fontSize);
+	sizeFinder.setPosition(0.0f,0.0f);
+
+	sf::FloatRect bounds;
+
+	rowRender.clear();
+
+	sf::RectangleShape prev;
+
+	for (int i = 0; i < fields; i++) {
+
+		sizeFinder.setString(titleStrings[i]);
+		bounds = sizeFinder.getGlobalBounds();
+
+		// add inner margin
+		bounds.height += innerMargin;
+		bounds.width += innerMargin;
+
+		// place in vector
+		rowRender.emplace_back(sf::Vector2f(bounds.width, bounds.height));
+
+		if (i == 0)
+			rowRender.back().setPosition(outerLineThickness,outerLineThickness);
+		else
+			rowRender.back().setPosition(prev.getSize().x + prev.getPosition().x, outerLineThickness);
+
+		//prev = rowRender.back;
+	}
+
+	// generate bigger rect that encompasses all the other rects
+	rowRender.emplace_back(sf::Vector2f(prev.getSize().x + prev.getPosition().x + 2*outerLineThickness, bounds.height + 2*outerLineThickness)); // bounding box around all the elements
+	rowRender.back().setOutlineThickness(outerLineThickness);
+}
+
+void Dropdown::render() const{
+	puts("not implemented");
+	// use rowRender to render rows, and to place text in those rows
+}
 

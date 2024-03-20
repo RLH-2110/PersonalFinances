@@ -13,6 +13,9 @@ void error(const errorID error) {
 	case errorID::outOfMem:
 		puts("\nProgamm ran out of memory!");
 		break;
+	case errorID::fontLoadError:
+		puts("\nComicMono.ttf was not found!");
+		break;
 	default:
 		break;
 	}

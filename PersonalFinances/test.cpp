@@ -1,14 +1,45 @@
-#include "dropdown.h"
+#ifdef DEBUG
 
+#include "includes.h"
+
+void dropdownTests();
+void fontTest();
 
 void test() {
 	
+	//fontTest();
+	dropdownTests();
+	
+
+}
+
+void fontTest() {
+	sf::RenderWindow window(sf::VideoMode(200, 60), "Font Test Window");
+	sf::Text text("Hello world!\nHallo Welt!", stdFont.font, stdFont.fontSize * 2);
+	text.setStyle(text.Bold | text.Italic | text.Underlined | text.StrikeThrough);
+
+	while (window.isOpen())
+	{
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+		}
+
+		window.clear();
+		window.draw(text);
+		window.display();
+	}
+}
+
+void dropdownTests() {
 
 	// constructor 1, valid data
-	/*{
+	{
 		std::string bar[] = { "hello world", "" };
 		Dropdown foo = Dropdown(sf::Vector2i(0, 0), 1, bar);
-	}*/
+	}
 
 	// constructor 2, valid data
 	/*{
@@ -17,11 +48,11 @@ void test() {
 
 		// fill in some valid test data
 		std::string data[] = { "This1","" };
-		barFields.push_back(data); 
+		barFields.push_back(data);
 		std::string data1[] = { "nanam","" };
-		barFields.push_back(data1); 
+		barFields.push_back(data1);
 		std::string data2[] = { "last string!!!!!!!!!!!!!!!!","" };
-		barFields.push_back(data2); 
+		barFields.push_back(data2);
 
 		Dropdown foo = Dropdown(sf::Vector2i(0, 0), 1, bar,barFields);
 	}*/
@@ -51,3 +82,5 @@ void test() {
 	}*/
 
 }
+
+#endif

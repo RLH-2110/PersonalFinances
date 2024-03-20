@@ -63,5 +63,8 @@
     <ClInclude Include="test.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="commonStructs.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
