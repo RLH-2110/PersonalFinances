@@ -33,7 +33,7 @@ void init() {
 	sf::Font sfFont;
 	if (sfFont.loadFromFile("./ComicMono.ttf") == false) error(errorID::fontLoadError);
 
-	stdFont.fontSize = 12;
+	stdFont.fontSize = 9;
 	stdFont.style = sf::Text::Regular;
 	stdFont.font = sfFont;
 		
@@ -51,7 +51,7 @@ int main()
 
 	
 
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
+	/*sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Green);
 
@@ -67,7 +67,7 @@ int main()
 		window.clear();
 		window.draw(shape);
 		window.display();
-	}
+	}*/
 
 	
 

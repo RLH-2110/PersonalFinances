@@ -20,10 +20,11 @@ private:
 
 	void generateRenderInfo();
 
-	const float innerMargin = 2.0f;
 	const float outerLineThickness = 1.0f;
-
+	const float mainboxOuterLineThickness = 1.0f;
 public:
+	const float innerMargin = 2.0f;
+
 	sf::Vector2i position;
 	FontData fontData;
 
@@ -31,7 +32,7 @@ public:
 	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
 	~Dropdown();
 
-	void render() const;
+	void render(sf::RenderWindow& window) const;
 
 	// getters
 	int getFields() const { return fields; }

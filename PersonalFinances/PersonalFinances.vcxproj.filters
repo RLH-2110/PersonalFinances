@@ -38,6 +38,9 @@
     <Text Include="..\todo.txt">
       <Filter>design and planning</Filter>
     </Text>
+    <Text Include="notes.txt">
+      <Filter>design and planning</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\monthly window.bmp">

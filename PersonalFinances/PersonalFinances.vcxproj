@@ -147,6 +147,7 @@
   <ItemGroup>
     <Text Include="..\perFin Reqs.txt" />
     <Text Include="..\todo.txt" />
+    <Text Include="notes.txt" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="..\main menue.bmp" />
