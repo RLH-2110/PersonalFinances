@@ -4,8 +4,8 @@
 
 class Dropdown : public Table
 {
-
 protected:
+
 	int extendedHeight;
 	bool extended = true;
 

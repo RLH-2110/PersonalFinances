@@ -2,10 +2,14 @@
 
 #include "includes.h"
 
+#define tbl_mainbox rowRender.back()
+#define tbl_addbox rowRender[rowRender.size() - 1]
+#define tbl_rowRenderNormalElementLen  rowRender.size() - 2
+
 class Table
 {
-
 protected:
+
 	int fields;
 	sf::Vector2i size;
 
@@ -22,9 +26,12 @@ protected:
 	float mainboxOuterLineThickness = 1.0f;
 
 	void initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+
 public:
 	sf::Vector2i position;
 	FontData fontData;
+
+	
 
 	Table();
 	Table(const Table& table);
@@ -33,7 +40,6 @@ public:
 		// Guard self assignment
 		if (this == &other)
 			return *this;
-
 
 		try {
 			Table ret(other);
@@ -61,6 +67,14 @@ public:
 	float getInnerMargin() const { return innerMargin; }
 	float getOuterLineThickness() const { return outerLineThickness; }
 	float getMainboxOuterLineThickness() const { return mainboxOuterLineThickness; }
+
+	const sf::RectangleShape getAddbox() const {
+		if (fields == 0 || rowRender.size() < 2) {
+			puts("No Addbox defined!");
+			return sf::RectangleShape();
+		}
+		return tbl_addbox;
+	}
 
 	//setters
 

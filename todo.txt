@@ -1,6 +1,7 @@
 create drop down menue
 
-	TODO: add the add buttion to the Table
+	TODO: add the add buttion to the Table \/
+	TODO: FIX ERROR THAT ADD BUTTION HAS TOO BIG BOX!
 
 	TODO: change some string arrays to vectors
 	TODO: add the colaplse box to the dropdown

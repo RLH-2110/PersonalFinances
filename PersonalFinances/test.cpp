@@ -87,7 +87,7 @@ void tableTests() {
 
 	// render test
 	{
-		sf::RenderWindow window(sf::VideoMode(200, 400), "Table Test Window");
+		sf::RenderWindow window(sf::VideoMode(250, 600), "Table Test Window");
 
 
 		sf::Text text("Hello world!\nHallo Welt!", stdFont.font, stdFont.fontSize * 2);
@@ -110,7 +110,7 @@ void tableTests() {
 		int leftOffset = 4;
 
 		Table tbl1 = Table(sf::Vector2i(leftOffset, 5), 1, bar, 1, 1, 1);
-		Table tbl2 = Table(sf::Vector2i(leftOffset, 50), 1, bar, barFields, 1, 1, 1);
+		Table tbl2 = Table(sf::Vector2i(leftOffset, 100), 1, bar, barFields, 1, 1, 1);
 
 
 		std::string bar2[] = { "Ex1", "Ex2", "" };
@@ -125,7 +125,7 @@ void tableTests() {
 		std::string data5[] = { "data5","data6","" };
 		barFields.push_back(data5);
 
-		Table tbl3 = Table(sf::Vector2i(leftOffset, 150), 2, bar2, barFields, 1, 1, 1);
+		Table tbl3 = Table(sf::Vector2i(leftOffset, 250), 2, bar2, barFields, 1, 1, 1);
 
 		std::string bar3[] = { "ID", "ABC", "123","" };
 
@@ -139,7 +139,7 @@ void tableTests() {
 		std::string data8[] = { "3","GHI","789","" };
 		barFields.push_back(data8);
 
-		Table tbl4 = Table(sf::Vector2i(leftOffset, 250), 3, bar3, barFields, 1, 1, 1);
+		Table tbl4 = Table(sf::Vector2i(leftOffset, 400), 3, bar3, barFields, 1, 1, 1);
 
 		int i = 1;
 		int j = 1;
@@ -148,7 +148,7 @@ void tableTests() {
 		sf::Text status;
 		status.setFont(stdFont.font);
 		status.setCharacterSize(stdFont.fontSize);
-		status.setPosition(100, 5);
+		status.setPosition(150, 5);
 		status.setFillColor(sf::Color::Black);
 
 		status.setString("i:1 j:1 l:1");
@@ -201,6 +201,7 @@ void tableTests() {
 			tbl4.render(window);
 			window.draw(status);
 			window.display();
+
 		}
 
 	}

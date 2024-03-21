@@ -136,7 +136,7 @@ Table::~Table() {
 
 
 
-void Table::generateRenderInfo() {
+void Table::generateRenderInfo() { // DO NOT USE THESE MACROS IN HERE: mainbox, addbox
 
 	puts("dont forget to test generateRenderInfo()!");
 
@@ -185,6 +185,17 @@ void Table::generateRenderInfo() {
 		prev = rowRender.back();
 	}
 
+	// generate the [+] element
+
+	rowRender.emplace_back(
+		sf::Vector2f(
+			prev.getPosition().x + prev.getSize().x,
+			prev.getGlobalBounds().height - outerLineThickness*2)
+	);
+	rowRender.back().setFillColor(sf::Color::Transparent);
+	rowRender.back().setOutlineColor(sf::Color::Black);
+	rowRender.back().setOutlineThickness(outerLineThickness);
+
 	// generate bigger rect that encompasses all the other rects
 	rowRender.emplace_back(
 		sf::Vector2f(
@@ -192,9 +203,9 @@ void Table::generateRenderInfo() {
 			prev.getGlobalBounds().height)
 	); // bounding box around all the elements
 
-#ifdef DEBUG
+/*#ifdef DEBUG
 	printf("----------\nsizeX: %f\nposX: %f\n mbOLT: %f\n oLT: %f\nresult: %f\n----------\n", prev.getSize().x, prev.getPosition().x, mainboxOuterLineThickness, outerLineThickness, rowRender.back().getSize().x);
-#endif // DEBUG
+#endif // DEBUG*/
 
 
 	rowRender.back().setPosition(mainboxOuterLineThickness, mainboxOuterLineThickness);
@@ -203,8 +214,15 @@ void Table::generateRenderInfo() {
 	rowRender.back().setOutlineThickness(mainboxOuterLineThickness);
 }
 
+
+
+
+
+
+
+
 void Table::render(sf::RenderWindow& window) const {
-	if (fields == 0) return;
+	if (fields == 0 || rowRender.size() < 3) { puts("Render conditions failed!"); return; }
 	// use rowRender to render rows, and to place text in those rows
 
 
@@ -214,7 +232,7 @@ void Table::render(sf::RenderWindow& window) const {
 
 	// draw the main box
 
-	sf::RectangleShape rect = rowRender.back();
+	sf::RectangleShape rect = tbl_mainbox;
 	rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
 
 
@@ -231,7 +249,7 @@ void Table::render(sf::RenderWindow& window) const {
 	textDraw.setFillColor(sf::Color::Black);
 
 	// draw the title fields
-	for (int j = 0; j < rowRender.size() - 1; j++) { // the last one is the big sourounding box that we ignore for now.
+	for (int j = 0; j < tbl_rowRenderNormalElementLen; j++) { 
 
 		rect = rowRender[j];
 		rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
@@ -245,13 +263,12 @@ void Table::render(sf::RenderWindow& window) const {
 
 	}
 
-	//yOffset += rowRender.front().getSize().y + rowRender.back().getOutlineThickness() * 2;
 	yOffset += rowRender.back().getGlobalBounds().height - mainboxOuterLineThickness;
 
 	for (int i = 0; i < elements.size(); i++) {
 
 
-		for (int j = 0; j < rowRender.size() - 1; j++) { // the last one is the big sourounding box that we ignore
+		for (int j = 0; j < tbl_rowRenderNormalElementLen; j++) { 
 
 			rect = rowRender[j];
 
@@ -278,7 +295,7 @@ void Table::render(sf::RenderWindow& window) const {
 				// why does that make it look good? IDK, I just adjust it as needed. I have no idea about this front end stuff.
 
 				int first_element = 0;
-				int last_element = rowRender.size() - 2;
+				int last_element = tbl_rowRenderNormalElementLen -1;
 
 				if (j == first_element || j == last_element) { // first or last element
 					rect.setSize(sf::Vector2f(rect.getSize().x + rowRender.back().getOutlineThickness(), rect.getSize().y)); // increase the size by the size of the outline
@@ -300,8 +317,27 @@ void Table::render(sf::RenderWindow& window) const {
 
 			window.draw(rect);
 		}
-		yOffset += rowRender.front().getSize().y + rowRender.front().getOutlineThickness();
+		yOffset += rowRender.front().getSize().y + rowRender.front().getOutlineThickness()*2;
 	}
+
+	//draw the [+] element
+	rect = tbl_addbox;
+
+#ifdef DEBUG
+	rect.setOutlineColor(sf::Color::Green);
+#endif // DEBUG
+		
+	rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
+
+	window.draw(rect);
+
+	textDraw.setString("+");
+
+	textDraw.setPosition(rect.getPosition().x + rect.getSize().x / 2 - textDraw.getGlobalBounds().width/2,
+		rect.getPosition().y + rect.getSize().y / 2 - textDraw.getGlobalBounds().height - textDraw.getGlobalBounds().height/2);
+	
+
+	window.draw(textDraw);
 
 }
 
