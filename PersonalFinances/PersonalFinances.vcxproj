@@ -142,6 +142,7 @@
     <ClCompile Include="dropdown.cpp" />
     <ClCompile Include="error.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="table.cpp" />
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="commonStructs.h" />
     <ClInclude Include="dropdown.h" />
     <ClInclude Include="error.h" />
+    <ClInclude Include="table.h" />
     <ClInclude Include="includes.h" />
     <ClInclude Include="test.h" />
   </ItemGroup>

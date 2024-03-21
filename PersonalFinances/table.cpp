@@ -12,23 +12,23 @@ contains unessarry safety checks for now.
 Depending on how I implement stuff later, I might remove them.
 */
 
-Dropdown::Dropdown() {
+Table::Table() {
 	fields = 0;
 }
 
-Dropdown::Dropdown(const Dropdown& dropdown) {
+Table::Table(const Table& table) {
+	
+	fields = table.fields;
+	size = table.size;
 
-	fields = dropdown.fields;
-	size = dropdown.size;
+	innerMargin = table.innerMargin;
+	outerLineThickness = table.outerLineThickness;
+	mainboxOuterLineThickness = table.mainboxOuterLineThickness;
 
-	innerMargin = dropdown.innerMargin;
-	outerLineThickness = dropdown.outerLineThickness;
-	mainboxOuterLineThickness = dropdown.mainboxOuterLineThickness;
+	position = table.position;
+	fontData = table.fontData;
 
-	position = dropdown.position;
-	fontData = dropdown.fontData;
-
-	rowRender = dropdown.rowRender;
+	rowRender = table.rowRender;
 
 	{	//	titleStrings //
 		try {
@@ -39,23 +39,24 @@ Dropdown::Dropdown(const Dropdown& dropdown) {
 		}
 
 		for (int i = 0; i < fields; i++) {
-			titleStrings[i] = dropdown.titleStrings[i];
+			titleStrings[i] = table.titleStrings[i];
 		}
 	}
 
-
+	
 	try {	// elements
-		for (int i = 0; i < dropdown.elements.size(); i++) {
-			elements.push_back(new string(*dropdown.elements[i]));
+		for (int i = 0; i < table.elements.size(); i++) {
+			elements.push_back(new string(*table.elements[i]));
 		}
 	}
 	catch (const std::bad_alloc &e) {
 		error(errorID::outOfMem);
-	}
+	}	
 
 }
 
-Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
+
+Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
 	this->position = position;
 	this->fields = fields;
 
@@ -80,7 +81,7 @@ Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string *
 	generateRenderInfo();
 }
 
-Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements)
+Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements)
 	: Table(position, fields, titleStrings)
 {
 	for (int i = 0; i < elements.size(); i++) {
@@ -102,22 +103,27 @@ Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string *
 	}
 }
 
-Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
-	: Dropdown(position, fields, titleStrings)
+Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+	: Table(position, fields, titleStrings)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-Dropdown::Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
-	: Dropdown(position, fields, titleStrings, elements)
+Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+	: Table(position, fields, titleStrings, elements)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
+void Table::initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness) {
+	this->innerMargin = innerMargin;
+	this->outerLineThickness = outerLineThickness;
+	this->mainboxOuterLineThickness = mainboxOuterLineThickness;
+}
 
 
-Dropdown::~Dropdown() {
-		delete [] titleStrings; titleStrings = nullptr;
+Table::~Table() {
+	delete[] titleStrings; titleStrings = nullptr;
 
-		elements.clear();
+	elements.clear();
 
 	while (!elements.empty()) {	// deallocate all pointers and remove all elements from the vector
 		free(elements.back());
@@ -130,15 +136,15 @@ Dropdown::~Dropdown() {
 
 
 
-void Dropdown::generateRenderInfo() {
+void Table::generateRenderInfo() {
 
 	puts("dont forget to test generateRenderInfo()!");
 
 	sf::Text sizeFinder;
 	sizeFinder.setFont(fontData.font);
-	sizeFinder.setStyle(fontData.style);		
+	sizeFinder.setStyle(fontData.style);
 	sizeFinder.setCharacterSize(fontData.fontSize);
-	sizeFinder.setPosition(0.0f,0.0f);
+	sizeFinder.setPosition(0.0f, 0.0f);
 
 	sf::FloatRect bounds;
 
@@ -155,14 +161,14 @@ void Dropdown::generateRenderInfo() {
 		bounds = sizeFinder.getGlobalBounds();
 
 		// add inner margin
-		sizeX = bounds.width + innerMargin *2;
+		sizeX = bounds.width + innerMargin * 2;
 
 		// find text height
 		sizeFinder.setString("ABCDEFGHIJKLMNOPQRTSUVWXYZ123456789+-*/;:"); // apperently characters can have different height, so we just take the biggest one
 		bounds = sizeFinder.getGlobalBounds();
-		
+
 		// add inner margin
-		sizeY = bounds.height + innerMargin *2;
+		sizeY = bounds.height + innerMargin * 2;
 
 		// place in vector
 		rowRender.emplace_back(sf::Vector2f(sizeX, sizeY));
@@ -172,18 +178,18 @@ void Dropdown::generateRenderInfo() {
 		rowRender.back().setOutlineThickness(outerLineThickness);
 
 		if (i == 0)
-			rowRender.back().setPosition(outerLineThickness+mainboxOuterLineThickness,outerLineThickness+ mainboxOuterLineThickness);
-		else 
+			rowRender.back().setPosition(outerLineThickness + mainboxOuterLineThickness, outerLineThickness + mainboxOuterLineThickness);
+		else
 			rowRender.back().setPosition(prev.getSize().x + prev.getPosition().x + outerLineThickness, outerLineThickness + mainboxOuterLineThickness);
-		
+
 		prev = rowRender.back();
 	}
 
 	// generate bigger rect that encompasses all the other rects
 	rowRender.emplace_back(
 		sf::Vector2f(
-		prev.getPosition().x + prev.getSize().x - mainboxOuterLineThickness + outerLineThickness,
-		prev.getGlobalBounds().height )
+			prev.getPosition().x + prev.getSize().x - mainboxOuterLineThickness + outerLineThickness,
+			prev.getGlobalBounds().height)
 	); // bounding box around all the elements
 
 #ifdef DEBUG
@@ -197,7 +203,7 @@ void Dropdown::generateRenderInfo() {
 	rowRender.back().setOutlineThickness(mainboxOuterLineThickness);
 }
 
-void Dropdown::render(sf::RenderWindow& window) const{
+void Table::render(sf::RenderWindow& window) const {
 	if (fields == 0) return;
 	// use rowRender to render rows, and to place text in those rows
 
@@ -207,7 +213,7 @@ void Dropdown::render(sf::RenderWindow& window) const{
 	int xOffset = position.x;
 
 	// draw the main box
-	
+
 	sf::RectangleShape rect = rowRender.back();
 	rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
 
@@ -217,7 +223,7 @@ void Dropdown::render(sf::RenderWindow& window) const{
 #endif // DEBUG
 
 	window.draw(rect);
-	
+
 	sf::Text textDraw;
 	textDraw.setFont(fontData.font);
 	textDraw.setCharacterSize(fontData.fontSize);
@@ -236,7 +242,7 @@ void Dropdown::render(sf::RenderWindow& window) const{
 		textDraw.setString(titleStrings[j]);
 
 		window.draw(textDraw);
-		
+
 	}
 
 	//yOffset += rowRender.front().getSize().y + rowRender.back().getOutlineThickness() * 2;
@@ -253,7 +259,7 @@ void Dropdown::render(sf::RenderWindow& window) const{
 			rect.setOutlineColor(sf::Color::Blue);
 #endif // DEBUG
 
-			
+
 			// make them flush with the outer border
 			{
 				// psyeudo code for clarity:
@@ -280,14 +286,15 @@ void Dropdown::render(sf::RenderWindow& window) const{
 				if (j == first_element && j == last_element) { // first and last at the same time
 					rect.setSize(sf::Vector2f(rect.getSize().x + rowRender.back().getOutlineThickness(), rect.getSize().y)); // increase the size by the size of the outline again
 					rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x - rowRender.back().getOutlineThickness(), yOffset + rect.getPosition().y));
-				}else if (j == first_element) {	// first element
+				}
+				else if (j == first_element) {	// first element
 					rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x - rowRender.back().getOutlineThickness(), yOffset + rect.getPosition().y));
 				}
 				else {	//	elements in the middle or the last element
 					rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
 				}
 			}
-			
+
 
 			//rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
 

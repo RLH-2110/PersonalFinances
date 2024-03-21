@@ -1,2 +1,5 @@
 commit message:
-fixed positioning of outer box
+split dropdown into dropdown and table
+
+reworked dropdown into table.
+made dropdown a child of table.

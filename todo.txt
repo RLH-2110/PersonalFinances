@@ -1,6 +1,7 @@
 create drop down menue
 
-	TODO: test more stuff with rendering Box. change constants!
-	TODO: changed some string arrays to vectors
+	TODO: add the add buttion to the Table
+
+	TODO: change some string arrays to vectors
 	TODO: add the colaplse box to the dropdown
 	TODO: save the dopown clickable area

@@ -2,34 +2,34 @@
 
 #include "includes.h"
 
-class Dropdown
+class Dropdown : public Table
 {
 
-	// todo
-
-private:
-	int fields;
+protected:
 	int extendedHeight;
-	sf::Vector2i size;	
-
-	// arrays (all indexed by 'fields')
-	std::string *titleStrings;
-	std::vector <std::string*> elements;
-
-	std::vector <sf::RectangleShape> rowRender;
-
-	void generateRenderInfo();
-
-	float innerMargin = 2.0f;
-	float outerLineThickness = 1.0f;
-	float mainboxOuterLineThickness = 1.0f;
-
-	void initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
-public:
 	bool extended = true;
 
-	sf::Vector2i position;
-	FontData fontData;
+	void generateRenderInfo();
+public:
+	
+	Dropdown();
+	Dropdown(const Dropdown& dropdown);
+	Dropdown& operator=(const Dropdown& other)
+	{
+		// Guard self assignment
+		if (this == &other)
+			return *this;
+
+
+		try {
+			Dropdown ret(other);
+			return ret;
+		}
+		catch (std::bad_alloc) {
+			error(errorID::outOfMem);
+			return *this;
+		}
+	}
 
 	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings);
 	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
@@ -41,18 +41,9 @@ public:
 	void render(sf::RenderWindow& window) const;
 
 	// getters
-	int getFields() const { return fields; }
 	int getExtendedHeight() const { return extendedHeight; }
-	sf::Vector2i getSize() const { return size; }
+	bool getExtended() const { return extended; }
 
-	float getInnerMargin() const { return innerMargin; }
-	float getOuterLineThickness() const { return outerLineThickness; }
-	float getMainboxOuterLineThickness() const { return mainboxOuterLineThickness; }
-
-	//setters
-
-	void setInnerMargin(float value) { innerMargin = value; generateRenderInfo(); }
-	void setOuterLineThickness(float value) {	outerLineThickness = value;	generateRenderInfo(); 	}
-	void setMainboxOuterLineThickness(float value) {	mainboxOuterLineThickness = value;	generateRenderInfo(); }
-
+	// setters
+	void setExtended(bool extended) { this->extended = extended; }
 };

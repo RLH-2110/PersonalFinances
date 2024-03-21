@@ -4,4 +4,5 @@
 #include <string>
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "table.h"
 #include "dropdown.h"
