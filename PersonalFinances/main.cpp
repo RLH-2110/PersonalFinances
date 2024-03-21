@@ -33,7 +33,7 @@ void init() {
 	sf::Font sfFont;
 	if (sfFont.loadFromFile("./ComicMono.ttf") == false) error(errorID::fontLoadError);
 
-	stdFont.fontSize = 9;
+	stdFont.fontSize = 12;	//9
 	stdFont.style = sf::Text::Regular;
 	stdFont.font = sfFont;
 		

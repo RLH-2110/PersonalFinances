@@ -1,2 +1,2 @@
 commit message:
-created basic render code for testing
+fixed positioning of outer box

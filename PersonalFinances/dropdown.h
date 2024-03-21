@@ -20,16 +20,22 @@ private:
 
 	void generateRenderInfo();
 
-	const float outerLineThickness = 1.0f;
-	const float mainboxOuterLineThickness = 1.0f;
+	float innerMargin = 2.0f;
+	float outerLineThickness = 1.0f;
+	float mainboxOuterLineThickness = 1.0f;
+
+	void initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 public:
-	const float innerMargin = 2.0f;
+	bool extended = true;
 
 	sf::Vector2i position;
 	FontData fontData;
 
 	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings);
 	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
+
+	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 	~Dropdown();
 
 	void render(sf::RenderWindow& window) const;
@@ -38,4 +44,15 @@ public:
 	int getFields() const { return fields; }
 	int getExtendedHeight() const { return extendedHeight; }
 	sf::Vector2i getSize() const { return size; }
+
+	float getInnerMargin() const { return innerMargin; }
+	float getOuterLineThickness() const { return outerLineThickness; }
+	float getMainboxOuterLineThickness() const { return mainboxOuterLineThickness; }
+
+	//setters
+
+	void setInnerMargin(float value) { innerMargin = value; generateRenderInfo(); }
+	void setOuterLineThickness(float value) {	outerLineThickness = value;	generateRenderInfo(); 	}
+	void setMainboxOuterLineThickness(float value) {	mainboxOuterLineThickness = value;	generateRenderInfo(); }
+
 };
