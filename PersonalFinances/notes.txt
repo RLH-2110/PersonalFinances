@@ -1,8 +1,8 @@
 commit message:
-Addbox, datatypes and Sizes Update
+Allowing adding and removing of elements
 
-fixed using wrong rectangle for the add box.
-added size calulation.
-modified test to see size.
-changed variables to use floats
-fixed add box being in the wrong position
+allowed moving the title strings into table.
+added option to add elements
+added option to remove elements
+added modiefied the test to test the new features.
+added key list to the test.

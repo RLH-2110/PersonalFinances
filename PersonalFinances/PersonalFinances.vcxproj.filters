@@ -66,13 +66,13 @@
     <ClInclude Include="includes.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="test.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="commonStructs.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="table.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>

@@ -111,7 +111,7 @@ void tableTests() {
 		bool displaySize = false;
 
 		Table tbl1 = Table(sf::Vector2f(leftOffset, 5), 1, bar, 1, 1, 1);
-		Table tbl2 = Table(sf::Vector2f(leftOffset, 100), 1, bar, barFields, 1, 1, 1);
+		Table tbl2 = Table(sf::Vector2f(leftOffset, 100), 1, std::move(bar), barFields, 1, 1, 1);
 
 
 		std::string bar2[] = { "Ex1", "Ex2", "" };
@@ -126,7 +126,7 @@ void tableTests() {
 		std::string data5[] = { "data5","data6","" };
 		barFields.push_back(data5);
 
-		Table tbl3 = Table(sf::Vector2f(leftOffset, 250), 2, bar2, barFields, 1, 1, 1);
+		Table tbl3 = Table(sf::Vector2f(leftOffset, 250), 2, std::move(bar2), barFields, 1, 1, 1);
 
 		std::string bar3[] = { "ID", "ABC", "123","" };
 
@@ -140,7 +140,7 @@ void tableTests() {
 		std::string data8[] = { "3","GHI","789","" };
 		barFields.push_back(data8);
 
-		Table tbl4 = Table(sf::Vector2f(leftOffset, 400), 3, bar3, barFields, 1, 1, 1);
+		Table tbl4 = Table(sf::Vector2f(leftOffset, 400), 3, std::move(bar3), barFields, 1, 1, 1);
 
 		int i = 1;
 		int j = 1;
@@ -154,6 +154,11 @@ void tableTests() {
 
 		status.setString("i:1 j:1 l:1");
 
+		sf::Text instruct = status;
+		instruct.setPosition(5, 570);
+		instruct.setString("Space,Return,LShift,RShift");
+
+
 		while (window.isOpen())
 		{
 			sf::Event event;
@@ -166,6 +171,14 @@ void tableTests() {
 
 					if (event.key.code == sf::Keyboard::Return)
 						displaySize = !displaySize;
+
+					if (event.key.code == sf::Keyboard::LShift) {
+						tbl4.addElement(new std::string[4]{ "MoreData1","MoreData2","MoreData3","" });
+					}
+
+					if (event.key.code == sf::Keyboard::RShift) {
+						tbl4.removeElement(3);
+					}
 
 					if (event.key.code == sf::Keyboard::Space) {
 						i++;
@@ -213,6 +226,7 @@ void tableTests() {
 			tbl3.render(window);
 			tbl4.render(window);
 
+			window.draw(instruct);
 			window.draw(status);
 
 			if (displaySize) {
