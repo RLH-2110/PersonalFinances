@@ -3,7 +3,7 @@
 #include "includes.h"
 
 #define tbl_mainbox rowRender.back()
-#define tbl_addbox rowRender[rowRender.size() - 1]
+#define tbl_addbox rowRender[rowRender.size() - 2]
 #define tbl_rowRenderNormalElementLen  rowRender.size() - 2
 
 class Table
@@ -11,7 +11,7 @@ class Table
 protected:
 
 	int fields;
-	sf::Vector2i size;
+	sf::Vector2f size;
 
 	// arrays (all indexed by 'fields')
 	std::string *titleStrings;
@@ -27,8 +27,10 @@ protected:
 
 	void initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 
+	void calculateSize();
+
 public:
-	sf::Vector2i position;
+	sf::Vector2f position;
 	FontData fontData;
 
 	
@@ -51,18 +53,18 @@ public:
 		}
 	}
 
-	Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings);
-	Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
+	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings);
+	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
 
-	Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
-	Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 	~Table();
 
 	void render(sf::RenderWindow& window) const;
 
 	// getters
 	int getFields() const { return fields; }
-	sf::Vector2i getSize() const { return size; }
+	sf::Vector2f getSize() const { return size; }
 
 	float getInnerMargin() const { return innerMargin; }
 	float getOuterLineThickness() const { return outerLineThickness; }
@@ -81,4 +83,5 @@ public:
 	void setInnerMargin(float value) { innerMargin = value; generateRenderInfo(); }
 	void setOuterLineThickness(float value) { outerLineThickness = value;	generateRenderInfo(); }
 	void setMainboxOuterLineThickness(float value) { mainboxOuterLineThickness = value;	generateRenderInfo(); }
+	void addElements();
 };

@@ -1,5 +1,8 @@
 commit message:
-split dropdown into dropdown and table
+Addbox, datatypes and Sizes Update
 
-reworked dropdown into table.
-made dropdown a child of table.
+fixed using wrong rectangle for the add box.
+added size calulation.
+modified test to see size.
+changed variables to use floats
+fixed add box being in the wrong position

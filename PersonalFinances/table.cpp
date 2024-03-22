@@ -56,7 +56,7 @@ Table::Table(const Table& table) {
 }
 
 
-Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
+Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
 	this->position = position;
 	this->fields = fields;
 
@@ -81,7 +81,7 @@ Table::Table(const sf::Vector2i& position, int fields, const std::string * const
 	generateRenderInfo();
 }
 
-Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements)
+Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements)
 	: Table(position, fields, titleStrings)
 {
 	for (int i = 0; i < elements.size(); i++) {
@@ -101,14 +101,15 @@ Table::Table(const sf::Vector2i& position, int fields, const std::string * const
 
 		this->elements.push_back(contents); // save it in the vector
 	}
+	calculateSize();
 }
 
-Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-Table::Table(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings, elements)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
@@ -134,12 +135,19 @@ Table::~Table() {
 
 
 
-
+void Table::calculateSize() {
+	if (fields == 0 || rowRender.size() < 2) {
+		puts("Warning: tried to calulate size of empty objekt!");
+		return;
+	}
+	
+	size.x = tbl_mainbox.getGlobalBounds().getSize().x;	// as thick as the main box
+	size.y = tbl_mainbox.getGlobalBounds().getSize().y + tbl_addbox.getGlobalBounds().getSize().y - 1;	// minimum size is y of main box and y of add box
+	size.y += (rowRender.front().getGlobalBounds().getSize().y - outerLineThickness) * elements.size();	// then add the size of all the elements.
+	size.y += outerLineThickness * elements.size()+1;
+}
 
 void Table::generateRenderInfo() { // DO NOT USE THESE MACROS IN HERE: mainbox, addbox
-
-	puts("dont forget to test generateRenderInfo()!");
-
 	sf::Text sizeFinder;
 	sizeFinder.setFont(fontData.font);
 	sizeFinder.setStyle(fontData.style);
@@ -189,9 +197,10 @@ void Table::generateRenderInfo() { // DO NOT USE THESE MACROS IN HERE: mainbox, 
 
 	rowRender.emplace_back(
 		sf::Vector2f(
-			prev.getPosition().x + prev.getSize().x,
+			prev.getPosition().x + prev.getSize().x + mainboxOuterLineThickness - outerLineThickness,
 			prev.getGlobalBounds().height - outerLineThickness*2)
 	);
+	rowRender.back().setPosition(outerLineThickness + mainboxOuterLineThickness, outerLineThickness + mainboxOuterLineThickness);
 	rowRender.back().setFillColor(sf::Color::Transparent);
 	rowRender.back().setOutlineColor(sf::Color::Black);
 	rowRender.back().setOutlineThickness(outerLineThickness);
@@ -212,6 +221,8 @@ void Table::generateRenderInfo() { // DO NOT USE THESE MACROS IN HERE: mainbox, 
 	rowRender.back().setFillColor(sf::Color::Transparent);
 	rowRender.back().setOutlineColor(sf::Color::Black);
 	rowRender.back().setOutlineThickness(mainboxOuterLineThickness);
+
+	calculateSize();
 }
 
 
@@ -327,7 +338,8 @@ void Table::render(sf::RenderWindow& window) const {
 	rect.setOutlineColor(sf::Color::Green);
 #endif // DEBUG
 		
-	rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
+
+	rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x - rowRender.back().getOutlineThickness(), yOffset + rect.getPosition().y)); // same as from the code above (the one with the first element)
 
 	window.draw(rect);
 

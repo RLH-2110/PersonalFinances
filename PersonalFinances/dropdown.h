@@ -31,11 +31,11 @@ public:
 		}
 	}
 
-	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings);
-	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
+	Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings);
+	Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
 
-	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
-	Dropdown(const sf::Vector2i& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 	~Dropdown();
 
 	void render(sf::RenderWindow& window) const;

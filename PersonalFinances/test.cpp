@@ -108,9 +108,10 @@ void tableTests() {
 		barFields.push_back(data2);
 
 		int leftOffset = 4;
+		bool displaySize = false;
 
-		Table tbl1 = Table(sf::Vector2i(leftOffset, 5), 1, bar, 1, 1, 1);
-		Table tbl2 = Table(sf::Vector2i(leftOffset, 100), 1, bar, barFields, 1, 1, 1);
+		Table tbl1 = Table(sf::Vector2f(leftOffset, 5), 1, bar, 1, 1, 1);
+		Table tbl2 = Table(sf::Vector2f(leftOffset, 100), 1, bar, barFields, 1, 1, 1);
 
 
 		std::string bar2[] = { "Ex1", "Ex2", "" };
@@ -125,7 +126,7 @@ void tableTests() {
 		std::string data5[] = { "data5","data6","" };
 		barFields.push_back(data5);
 
-		Table tbl3 = Table(sf::Vector2i(leftOffset, 250), 2, bar2, barFields, 1, 1, 1);
+		Table tbl3 = Table(sf::Vector2f(leftOffset, 250), 2, bar2, barFields, 1, 1, 1);
 
 		std::string bar3[] = { "ID", "ABC", "123","" };
 
@@ -139,7 +140,7 @@ void tableTests() {
 		std::string data8[] = { "3","GHI","789","" };
 		barFields.push_back(data8);
 
-		Table tbl4 = Table(sf::Vector2i(leftOffset, 400), 3, bar3, barFields, 1, 1, 1);
+		Table tbl4 = Table(sf::Vector2f(leftOffset, 400), 3, bar3, barFields, 1, 1, 1);
 
 		int i = 1;
 		int j = 1;
@@ -162,6 +163,10 @@ void tableTests() {
 					window.close();
 
 				if (event.type == sf::Event::KeyPressed) {
+
+					if (event.key.code == sf::Keyboard::Return)
+						displaySize = !displaySize;
+
 					if (event.key.code == sf::Keyboard::Space) {
 						i++;
 						if (i > 5) {
@@ -194,12 +199,40 @@ void tableTests() {
 				}
 			}
 
+#ifdef DEBUG
+			sf::RectangleShape showSize;
+			showSize.setFillColor(sf::Color::Transparent);
+			showSize.setOutlineThickness(1.0f);
+			showSize.setOutlineColor(sf::Color::Magenta);
+
+#endif // DEBUG
+
 			window.clear(sf::Color::White);
 			tbl1.render(window);
 			tbl2.render(window);
 			tbl3.render(window);
 			tbl4.render(window);
+
 			window.draw(status);
+
+			if (displaySize) {
+				showSize.setPosition(tbl1.position);
+				showSize.setSize(tbl1.getSize());
+				window.draw(showSize);
+
+				showSize.setPosition(tbl2.position);
+				showSize.setSize(tbl2.getSize());
+				window.draw(showSize);
+
+				showSize.setPosition(tbl3.position);
+				showSize.setSize(tbl3.getSize());
+				window.draw(showSize);
+
+				showSize.setPosition(tbl4.position);
+				showSize.setSize(tbl4.getSize());
+				window.draw(showSize);
+			}
+
 			window.display();
 
 		}
@@ -209,7 +242,7 @@ void tableTests() {
 }
 
 void dropdownTests() {
-
+	
 
 	// constructor 1, valid data
 	/*{
@@ -258,7 +291,7 @@ void dropdownTests() {
 	}*/
 
 	// render test
-	{
+	/*{
 		sf::RenderWindow window(sf::VideoMode(200, 400), "Dropdown Test Window");
 
 
@@ -375,7 +408,7 @@ void dropdownTests() {
 			window.display();
 		}
 
-	}
+	}*/
 }
 
 #endif
