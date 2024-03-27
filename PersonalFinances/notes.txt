@@ -1,8 +1,9 @@
 commit message:
-Allowing adding and removing of elements
+Text rendering and WString support
 
-allowed moving the title strings into table.
-added option to add elements
-added option to remove elements
-added modiefied the test to test the new features.
-added key list to the test.
+added Text rendering
+changed strings into wstrings
+made sure colums are at lest 4 characters long
+modiefed font to include new characters
+modiefed font error message
+added fontPath macro

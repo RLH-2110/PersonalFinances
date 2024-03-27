@@ -2,7 +2,7 @@
 
 using sf::Vector2i;
 using sf::Vector2f;
-using std::string;
+using std::wstring;
 using std::vector;
 
 
@@ -32,7 +32,7 @@ Dropdown::Dropdown(const Dropdown& dropdown) {
 
 	{	//	titleStrings //
 		try {
-			this->titleStrings = new string[fields];
+			this->titleStrings = new wstring[fields];
 		}
 		catch (const std::bad_alloc &e) {
 			error(errorID::outOfMem);
@@ -46,7 +46,7 @@ Dropdown::Dropdown(const Dropdown& dropdown) {
 
 	try {	// elements
 		for (int i = 0; i < dropdown.elements.size(); i++) {
-			elements.push_back(new string(*dropdown.elements[i]));
+			elements.push_back(new wstring(*dropdown.elements[i]));
 		}
 	}
 	catch (const std::bad_alloc &e) {
@@ -55,22 +55,22 @@ Dropdown::Dropdown(const Dropdown& dropdown) {
 
 }
 
-Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
+Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
 	puts("update code!");
 }
 
-Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements)
+Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements)
 	: Table(position, fields, titleStrings)
 {
 	puts("update code!");
 }
 
-Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Dropdown(position, fields, titleStrings)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Dropdown::Dropdown(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Dropdown(position, fields, titleStrings, elements)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);

@@ -1,4 +1,5 @@
 #include "error.h"
+#include "includes.h"
 #include <cstdlib>
 #include <stdio.h>
 
@@ -14,7 +15,9 @@ void error(const errorID error) {
 		puts("\nProgamm ran out of memory!");
 		break;
 	case errorID::fontLoadError:
-		puts("\nComicMono.ttf was not found!");
+		puts("");
+		fputs(fontPath, stdout);
+		puts("\nFont file was not found!");
 		break;
 	default:
 		break;

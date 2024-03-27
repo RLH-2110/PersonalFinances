@@ -14,8 +14,8 @@ protected:
 	sf::Vector2f size;
 
 	// arrays (all indexed by 'fields')
-	std::string *titleStrings;
-	std::vector <std::string*> elements;
+	std::wstring *titleStrings;
+	std::vector <std::wstring*> elements;
 
 	std::vector <sf::RectangleShape> rowRender;
 
@@ -26,7 +26,7 @@ protected:
 	float mainboxOuterLineThickness = 1.0f;
 
 	void initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
-	void vectorAssign(const std::vector <std::string*>& elements);
+	void vectorAssign(const std::vector <std::wstring*>& elements);
 
 	void calculateSize();
 
@@ -54,27 +54,27 @@ public:
 		}
 	}
 
-	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings);
-	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements);
+	Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings);
+	Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements);
 
-	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
-	Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 	
 
-	Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings);
-	Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings, const std::vector <std::string*>& elements);
+	Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings);
+	Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const std::vector <std::wstring*>& elements);
 
 
-	Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
-	Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
+	Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness);
 
 	~Table();
 
 	void render(sf::RenderWindow& window) const;
-	void renderText(sf::RenderWindow& window, std::string text, sf::Vector2f position) const;
+	void renderText(sf::RenderWindow& window, const std::wstring& text, const sf::RectangleShape& rect) const; // rect = the field in wich the text is placed
 
-	void addElement(const std::string * const element);
-	void addElement(std::string*&& element);
+	void addElement(const std::wstring * const element);
+	void addElement(std::wstring*&& element);
 
 	bool removeElement(int elementID);
 
