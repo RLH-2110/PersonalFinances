@@ -128,16 +128,16 @@ void tableTests() {
 
 		Table tbl3 = Table(sf::Vector2f(leftOffset, 250), 2, std::move(bar2), barFields, 1, 1, 1);
 
-		std::wstring bar3[] = { L"ID", L"ABC", L"123",L"" };
+		std::wstring bar3[] = { L"ID", L"ABC", L"123 ",L"" };
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::wstring data6[] = { L"1",L"ABC",L"123",L"" };
+		std::wstring data6[] = { L"1",L"ABC",L"123€",L"" };
 		barFields.push_back(data6);
-		std::wstring data7[] = { L"2",L"DEF",L"456",L"" };
+		std::wstring data7[] = { L"2",L"DEF",L"456€",L"" };
 		barFields.push_back(data7);
-		std::wstring data8[] = { L"3",L"GHI",L"789",L"" };
+		std::wstring data8[] = { L"3",L"GHI",L"789£",L"" };
 		barFields.push_back(data8);
 
 		Table tbl4 = Table(sf::Vector2f(leftOffset, 400), 3, std::move(bar3), barFields, 1, 1, 1);
