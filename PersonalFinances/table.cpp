@@ -2,7 +2,7 @@
 
 using sf::Vector2i;
 using sf::Vector2f;
-using std::string;
+using std::wstring;
 using std::vector;
 
 
@@ -32,7 +32,7 @@ Table::Table(const Table& table) {
 
 	{	//	titleStrings //
 		try {
-			this->titleStrings = new string[fields];
+			this->titleStrings = new wstring[fields];
 		}
 		catch (const std::bad_alloc &e) {
 			error(errorID::outOfMem);
@@ -46,7 +46,7 @@ Table::Table(const Table& table) {
 	
 	try {	// elements
 		for (int i = 0; i < table.elements.size(); i++) {
-			elements.push_back(new string(*table.elements[i]));
+			elements.push_back(new wstring(*table.elements[i]));
 		}
 	}
 	catch (const std::bad_alloc &e) {
@@ -56,16 +56,16 @@ Table::Table(const Table& table) {
 }
 
 
-void Table::vectorAssign(const std::vector <std::string*>& elements) {
+void Table::vectorAssign(const std::vector <std::wstring*>& elements) {
 	for (int i = 0; i < elements.size(); i++) {
 
-		string *contents = new string[fields];	// create new memory, indipendent from what happens outside this class
+		wstring *contents = new wstring[fields];	// create new memory, indipendent from what happens outside this class
 
 		//copy the data in the new memory
 
 		// check if the string array metches the number of fields, and add the strings to contents
 		for (int j = 0; j < fields; j++) {
-			if (elements[i][j] == std::string("")) {	// check if the current element is an empty string (terminator)
+			if (elements[i][j] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
 				delete[] contents; contents = nullptr;
 				error(errorID::arraySizeMismatch);
 			}
@@ -77,12 +77,12 @@ void Table::vectorAssign(const std::vector <std::string*>& elements) {
 	calculateSize();
 }
 
-Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
+Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
 	this->position = position;
 	this->fields = fields;
 
 	try {
-		this->titleStrings = new string[fields];
+		this->titleStrings = new wstring[fields];
 	}
 	catch (const std::bad_alloc &e) {
 		error(errorID::outOfMem);
@@ -90,7 +90,7 @@ Table::Table(const sf::Vector2f& position, int fields, const std::string * const
 
 	// check if the string array metches the number of fields, and add the strings to the list.
 	for (int i = 0; i < fields; i++) {
-		if (titleStrings[i] == std::string("")) {	// check if the current element is an empty string (terminator)
+		if (titleStrings[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
 			delete[] this->titleStrings; this->titleStrings = nullptr;
 			error(errorID::arraySizeMismatch);
 		}
@@ -102,24 +102,24 @@ Table::Table(const sf::Vector2f& position, int fields, const std::string * const
 	generateRenderInfo();
 }
 
-Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements)
+Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements)
 	: Table(position, fields, titleStrings)
 {
 	vectorAssign(elements);
 }
 
-Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-Table::Table(const sf::Vector2f& position, int fields, const std::string * const titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings, elements)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
 
-Table::Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
+Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
 	this->position = position;
 	this->fields = fields;
 
@@ -130,7 +130,7 @@ Table::Table(const sf::Vector2f& position, int fields, std::string*&& titleStrin
 
 	// check if the string array metches the number of fields, and add the strings to the list.
 	for (int i = 0; i < fields; i++) {
-		if (this->titleStrings[i] == std::string("")) {	// check if the current element is an empty string (terminator)
+		if (this->titleStrings[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
 			delete[] this->titleStrings; this->titleStrings = nullptr;
 			error(errorID::arraySizeMismatch);
 		}
@@ -141,18 +141,18 @@ Table::Table(const sf::Vector2f& position, int fields, std::string*&& titleStrin
 	generateRenderInfo();
 }
 
-Table::Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings, const std::vector <std::string*>& elements)
+Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const std::vector <std::wstring*>& elements)
 	: Table(position, fields, titleStrings)
 {
 	vectorAssign(elements);
 }
 
-Table::Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings) 
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-Table::Table(const sf::Vector2f& position, int fields, std::string*&& titleStrings, const std::vector <std::string*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 : Table(position, fields, titleStrings, elements)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
@@ -177,6 +177,15 @@ Table::~Table() {
 	}
 
 }
+
+
+
+
+
+
+
+
+
 
 
 
@@ -210,7 +219,11 @@ void Table::generateRenderInfo() { // DO NOT USE THESE MACROS IN HERE: mainbox, 
 	for (int i = 0; i < fields; i++) {
 
 		// find text with
-		sizeFinder.setString(titleStrings[i]);
+		if (titleStrings[i].length() >= 4)
+			sizeFinder.setString(titleStrings[i]);
+		else
+			sizeFinder.setString(L"ABCD");
+
 		bounds = sizeFinder.getGlobalBounds();
 
 		// add inner margin
@@ -367,6 +380,7 @@ void Table::render(sf::RenderWindow& window) const {
 			//rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
 
 			window.draw(rect);
+			renderText(window, elements[i][j], rect);
 		}
 		yOffset += rowRender.front().getSize().y + rowRender.front().getOutlineThickness()*2;
 	}
@@ -394,11 +408,56 @@ void Table::render(sf::RenderWindow& window) const {
 }
 
 
-void Table::addElement(const std::string * const element) {	// string array is "" terminated
-	std::string *content = nullptr;
+
+void Table::renderText(sf::RenderWindow& window, const std::wstring& text, const sf::RectangleShape& rect) const {
+	// init textDraw
+	sf::Text textDraw;
+	textDraw.setFont(fontData.font);
+	textDraw.setCharacterSize(fontData.fontSize);
+	textDraw.setStyle(fontData.style);
+	textDraw.setFillColor(sf::Color::Black);
+	textDraw.setString(text);
+
+	// set position inside the box
+	textDraw.setPosition(rect.getPosition().x + innerMargin, rect.getPosition().y + innerMargin);
+	
+	// get maxsize of string
+	int maxSize = rect.getSize().x - innerMargin * 2;
+
+	// if its bigger than the maxsize, replace the last char with a …
+	if (textDraw.getGlobalBounds().width > maxSize && text.length() > 3) {
+		std::wstring small = textDraw.getString().toWideString();
+		small.pop_back();
+		small.append(std::wstring(L"…"));
+		textDraw.setString(small);
+	}
+
+	// while the string is bigger than the max size, trim it by 2 and add …
+	while (textDraw.getGlobalBounds().width > maxSize) {
+		std::wstring small = textDraw.getString().toWideString();
+		if (small.length() <= 4) break;
+		small = small.substr(0, small.length() - 2);
+		small.append(L"…");
+		textDraw.setString(small);
+	}
+
+
+	window.draw(textDraw);
+}
+
+
+
+
+
+
+
+
+
+void Table::addElement(const std::wstring * const element) {	// string array is "" terminated
+	std::wstring *content = nullptr;
 
 	try {
-		content = new std::string[fields];
+		content = new std::wstring[fields];
 	}
 	catch (const std::bad_alloc &e) {
 		delete[] content;
@@ -407,7 +466,7 @@ void Table::addElement(const std::string * const element) {	// string array is "
 
 	// check if the string array metches the number of fields, and add the strings to the list.
 	for (int i = 0; i < fields; i++) {
-		if (element[i] == std::string("")) {	// check if the current element is an empty string (terminator)
+		if (element[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
 			delete[] content; content = nullptr;
 			error(errorID::arraySizeMismatch);
 		}
@@ -417,14 +476,14 @@ void Table::addElement(const std::string * const element) {	// string array is "
 	calculateSize();
 }
 
-void Table::addElement(std::string*&& element) {
+void Table::addElement(std::wstring*&& element) {
 	elements.push_back(element);
 	element = nullptr;
 
 
 	// check if the string array metches the number of fields, and add the strings to the list.
 	for (int i = 0; i < fields; i++) {
-		if (elements.back()[i] == std::string("")) {	// check if the current element is an empty string (terminator)
+		if (elements.back()[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
 			delete[] elements.back(); elements.back() = nullptr;
 			error(errorID::arraySizeMismatch);
 		}

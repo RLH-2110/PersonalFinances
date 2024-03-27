@@ -15,4 +15,5 @@ struct FontData {
 	}
 };
 
-extern FontData stdFont;
+extern FontData stdFont;	// standart font
+

@@ -41,21 +41,21 @@ void tableTests() {
 	
 	// constructor 1, valid data
 	/*{
-		std::string bar[] = { "hello world", "" };
+		std::wstring bar[] = { L"hello world", L"" };
 		Table foo = Table(sf::Vector2i(0, 0), 1, bar);
 	}*/
 
 	// constructor 2, valid data
 	/*{
-		std::string bar[] = { "hello world", "" };
-		std::vector<std::string*> barFields;
+		std::wstring bar[] = { L"hello world", L"" };
+		std::vector<std::wstring*> barFields;
 
 		// fill in some valid test data
-		std::string data[] = { "This1","" };
+		std::wstring data[] = { L"This1",L"" };
 		barFields.push_back(data);
-		std::string data1[] = { "nanam","" };
+		std::wstring data1[] = { L"nanam",L"" };
 		barFields.push_back(data1);
-		std::string data2[] = { "last string!!!!!!!!!!!!!!!!","" };
+		std::wstring data2[] = { L"last string!!!!!!!!!!!!!!!!",L"" };
 		barFields.push_back(data2);
 
 		Table foo = Table(sf::Vector2i(0, 0), 1, bar,barFields);
@@ -64,21 +64,21 @@ void tableTests() {
 	// constructor 1 and 2, invalid data
 	/*{
 		{
-			std::string bar[] = { "hello world", "affe","" };
+			std::wstring bar[] = { L"hello world", L"affe",L"" };
 			Table foo = Table(sf::Vector2i(0, 0), 1, bar);
 		}
 		{
-			std::string bar[] = { "hello world", "huhn","" };
-			std::vector<std::string*> barFields;
+			std::wstring bar[] = { L"hello world", L"huhn",L"" };
+			std::vector<std::wstring*> barFields;
 
 			// fill in some valid test data
-			std::string data[] = { "This1","po","" };
+			std::wstring data[] = { L"This1",L"po",L"" };
 			barFields.push_back(data);
-			std::string data2[] = { "nanam","15454","45","" };
+			std::wstring data2[] = { L"nanam",L"15454",L"45",L"" };
 			barFields.push_back(data2);
-			std::string data3[] = { "last string!!!!!!!!!!!!!!!!","emaf","","","","Jafsa" };
+			std::wstring data3[] = { L"last string!!!!!!!!!!!!!!!!",L"emaf",L"",L"",L"",L"Jafsa" };
 			barFields.push_back(data3);
-			std::string data4[] = { "", "" };
+			std::wstring data4[] = { L"", L"" };
 			barFields.push_back(data4);
 
 			Table foo = Table(sf::Vector2i(0, 0), 1, bar, barFields);
@@ -95,16 +95,16 @@ void tableTests() {
 
 
 
-		std::string bar[] = { "hello world", "" };
+		std::wstring bar[] = { L"hello world", L"" };
 
-		std::vector<std::string*> barFields;
+		std::vector<std::wstring*> barFields;
 
 		// fill in some valid test data
-		std::string data[] = { "This1","" };
+		std::wstring data[] = { L"This1",L"" };
 		barFields.push_back(data);
-		std::string data1[] = { "nanam","" };
+		std::wstring data1[] = { L"nanam",L"" };
 		barFields.push_back(data1);
-		std::string data2[] = { "last string!!!!!!!!!!!!!!!!","" };
+		std::wstring data2[] = { L"last string!!!!!!!!!!!!!!!!",L"" };
 		barFields.push_back(data2);
 
 		int leftOffset = 4;
@@ -114,30 +114,30 @@ void tableTests() {
 		Table tbl2 = Table(sf::Vector2f(leftOffset, 100), 1, std::move(bar), barFields, 1, 1, 1);
 
 
-		std::string bar2[] = { "Ex1", "Ex2", "" };
+		std::wstring bar2[] = { L"Ex1", L"Ex2", L"" };
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::string data3[] = { "data1","data2","" };
+		std::wstring data3[] = { L"data1",L"data2",L"" };
 		barFields.push_back(data3);
-		std::string data4[] = { "data3","data4","" };
+		std::wstring data4[] = { L"data3",L"data4",L"" };
 		barFields.push_back(data4);
-		std::string data5[] = { "data5","data6","" };
+		std::wstring data5[] = { L"data5",L"data6",L"" };
 		barFields.push_back(data5);
 
 		Table tbl3 = Table(sf::Vector2f(leftOffset, 250), 2, std::move(bar2), barFields, 1, 1, 1);
 
-		std::string bar3[] = { "ID", "ABC", "123","" };
+		std::wstring bar3[] = { L"ID", L"ABC", L"123",L"" };
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::string data6[] = { "1","ABC","123","" };
+		std::wstring data6[] = { L"1",L"ABC",L"123",L"" };
 		barFields.push_back(data6);
-		std::string data7[] = { "2","DEF","456","" };
+		std::wstring data7[] = { L"2",L"DEF",L"456",L"" };
 		barFields.push_back(data7);
-		std::string data8[] = { "3","GHI","789","" };
+		std::wstring data8[] = { L"3",L"GHI",L"789",L"" };
 		barFields.push_back(data8);
 
 		Table tbl4 = Table(sf::Vector2f(leftOffset, 400), 3, std::move(bar3), barFields, 1, 1, 1);
@@ -173,7 +173,7 @@ void tableTests() {
 						displaySize = !displaySize;
 
 					if (event.key.code == sf::Keyboard::LShift) {
-						tbl4.addElement(new std::string[4]{ "MoreData1","MoreData2","MoreData3","" });
+						tbl4.addElement(new std::wstring[4]{ L"MoreData1",L"MoreData2",L"MoreData3",L"" });
 					}
 
 					if (event.key.code == sf::Keyboard::RShift) {
@@ -206,7 +206,7 @@ void tableTests() {
 						tbl4.setMainboxOuterLineThickness(i);
 
 					}
-					std::string str = "i:" + std::to_string(i) + " j:" + std::to_string(j) + " l:" + std::to_string(l) + "";
+					std::wstring str = L"i:" + std::to_wstring(i) + L" j:" + std::to_wstring(j) + L" l:" + std::to_wstring(l) + L"";
 					status.setString(str);
 
 				}
@@ -260,21 +260,21 @@ void dropdownTests() {
 
 	// constructor 1, valid data
 	/*{
-		std::string bar[] = { "hello world", "" };
+		std::wstring bar[] = { L"hello world", L"" };
 		Dropdown foo = Dropdown(sf::Vector2i(0, 0), 1, bar);
 	}*/
 
 	// constructor 2, valid data
 	/*{
-		std::string bar[] = { "hello world", "" };
-		std::vector<std::string*> barFields;
+		std::wstring bar[] = { L"hello world", L"" };
+		std::vector<std::wstring*> barFields;
 
 		// fill in some valid test data
-		std::string data[] = { "This1","" };
+		std::wstring data[] = { L"This1",L"" };
 		barFields.push_back(data);
-		std::string data1[] = { "nanam","" };
+		std::wstring data1[] = { L"nanam",L"" };
 		barFields.push_back(data1);
-		std::string data2[] = { "last string!!!!!!!!!!!!!!!!","" };
+		std::wstring data2[] = { L"last string!!!!!!!!!!!!!!!!",L"" };
 		barFields.push_back(data2);
 
 		Dropdown foo = Dropdown(sf::Vector2i(0, 0), 1, bar,barFields);
@@ -283,21 +283,21 @@ void dropdownTests() {
 	// constructor 1 and 2, invalid data
 	/*{
 		{
-			std::string bar[] = { "hello world", "affe","" };
+			std::wstring bar[] = { L"hello world", L"affe",L"" };
 			Dropdown foo = Dropdown(sf::Vector2i(0, 0), 1, bar);
 		}
 		{
-			std::string bar[] = { "hello world", "huhn","" };
-			std::vector<std::string*> barFields;
+			std::wstring bar[] = { L"hello world", L"huhn",L"" };
+			std::vector<std::wstring*> barFields;
 
 			// fill in some valid test data
-			std::string data[] = { "This1","po","" };
+			std::wstring data[] = { L"This1",L"po",L"" };
 			barFields.push_back(data);
-			std::string data2[] = { "nanam","15454","45","" };
+			std::wstring data2[] = { L"nanam",L"15454",L"45",L"" };
 			barFields.push_back(data2);
-			std::string data3[] = { "last string!!!!!!!!!!!!!!!!","emaf","","","","Jafsa" };
+			std::wstring data3[] = { L"last string!!!!!!!!!!!!!!!!",L"emaf",L"",L"",L"",L"Jafsa" };
 			barFields.push_back(data3);
-			std::string data4[] = { "", "" };
+			std::wstring data4[] = { L"", L"" };
 			barFields.push_back(data4);
 
 			Dropdown foo = Dropdown(sf::Vector2i(0, 0), 1, bar, barFields);
@@ -306,7 +306,7 @@ void dropdownTests() {
 
 	// render test
 	/*{
-		sf::RenderWindow window(sf::VideoMode(200, 400), "Dropdown Test Window");
+		sf::RenderWindow window(sf::VideoMode(200, 400), L"Dropdown Test Window");
 
 
 		sf::Text text("Hello world!\nHallo Welt!", stdFont.font, stdFont.fontSize * 2);
@@ -314,16 +314,16 @@ void dropdownTests() {
 
 
 
-		std::string bar[] = { "hello world", "" };
+		std::wstring bar[] = { L"hello world", L"" };
 
-		std::vector<std::string*> barFields;
+		std::vector<std::wstring*> barFields;
 
 		// fill in some valid test data
-		std::string data[] = { "This1","" };
+		std::wstring data[] = { L"This1",L"" };
 		barFields.push_back(data);
-		std::string data1[] = { "nanam","" };
+		std::wstring data1[] = { L"nanam",L"" };
 		barFields.push_back(data1);
-		std::string data2[] = { "last string!!!!!!!!!!!!!!!!","" };
+		std::wstring data2[] = { L"last string!!!!!!!!!!!!!!!!",L"" };
 		barFields.push_back(data2);
 
 		int leftOffset = 4;
@@ -332,30 +332,30 @@ void dropdownTests() {
 		Dropdown dp2 = Dropdown(sf::Vector2i(leftOffset, 50), 1, bar, barFields,1,1,1);
 
 
-		std::string bar2[] = { "Ex1", "Ex2", "" };
+		std::wstring bar2[] = { L"Ex1", L"Ex2", L"" };
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::string data3[] = { "data1","data2","" };
+		std::wstring data3[] = { L"data1",L"data2",L"" };
 		barFields.push_back(data3);
-		std::string data4[] = { "data3","data4","" };
+		std::wstring data4[] = { L"data3",L"data4",L"" };
 		barFields.push_back(data4);
-		std::string data5[] = { "data5","data6","" };
+		std::wstring data5[] = { L"data5",L"data6",L"" };
 		barFields.push_back(data5);
 
 		Dropdown dp3 = Dropdown(sf::Vector2i(leftOffset, 150), 2, bar2, barFields, 1, 1, 1);
 
-		std::string bar3[] = { "ID", "ABC", "123","" };
+		std::wstring bar3[] = { L"ID", L"ABC", L"123",L"" };
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::string data6[] = { "1","ABC","123","" };
+		std::wstring data6[] = { L"1",L"ABC",L"123",L"" };
 		barFields.push_back(data6);
-		std::string data7[] = { "2","DEF","456","" };
+		std::wstring data7[] = { L"2",L"DEF",L"456",L"" };
 		barFields.push_back(data7);
-		std::string data8[] = { "3","GHI","789","" };
+		std::wstring data8[] = { L"3",L"GHI",L"789",L"" };
 		barFields.push_back(data8);
 
 		Dropdown dp4 = Dropdown(sf::Vector2i(leftOffset, 250), 3, bar3, barFields, 1, 1, 1);
@@ -407,7 +407,7 @@ void dropdownTests() {
 						dp4.setMainboxOuterLineThickness(i);
 
 					}
-					std::string str = "i:" + std::to_string(i) + " j:" + std::to_string(j) + " l:" + std::to_string(l) + "";
+					std::wstring str = L"i:" + std::to_string(i) + L" j:" + std::to_string(j) + L" l:" + std::to_string(l) + L"";
 					status.setString(str);
 
 				}

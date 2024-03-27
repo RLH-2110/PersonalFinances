@@ -17,8 +17,10 @@ FontData stdFont;
 
 void init() {
 
+
+
 #ifdef fileNotFoundDebug
-	std::string filename = "./ComicMono.ttf";
+	std::string filename = fontPath;
 	std::ifstream file(filename);
 
 	if (file) {
@@ -31,12 +33,11 @@ void init() {
 #endif // fileNotFoundDebug
 
 	sf::Font sfFont;
-	if (sfFont.loadFromFile("./ComicMono.ttf") == false) error(errorID::fontLoadError);
+	if (sfFont.loadFromFile(fontPath) == false) error(errorID::fontLoadError);
 
 	stdFont.fontSize = 12;	//9
 	stdFont.style = sf::Text::Regular;
-	stdFont.font = sfFont;
-		
+	stdFont.font = sfFont;		
 }
 
 int main()

@@ -6,3 +6,5 @@
 #include <vector>
 #include "table.h"
 #include "dropdown.h"
+
+#define fontPath "./ComicMonoEXT.otf"
