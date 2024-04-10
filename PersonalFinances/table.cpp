@@ -1,4 +1,4 @@
-#include "includes.h";
+#include "includes.h"
 
 using sf::Vector2i;
 using sf::Vector2f;
@@ -14,6 +14,22 @@ Depending on how I implement stuff later, I might remove them.
 
 Table::Table() {
 	fields = 0;
+}
+
+Table& Table::operator=(const Table& other)
+{
+	// Guard self assignment
+	if (this == &other)
+		return *this;
+
+	try {
+		Table ret = other;
+		return ret;
+	}
+	catch (std::bad_alloc) {
+		error(errorID::outOfMem);
+		return *this;
+	}
 }
 
 Table::Table(const Table& table) {
@@ -34,7 +50,7 @@ Table::Table(const Table& table) {
 		try {
 			this->titleStrings = new wstring[fields];
 		}
-		catch (const std::bad_alloc &e) {
+		catch (const std::bad_alloc&) {
 			error(errorID::outOfMem);
 		}
 
@@ -45,11 +61,11 @@ Table::Table(const Table& table) {
 
 	
 	try {	// elements
-		for (int i = 0; i < table.elements.size(); i++) {
+		for (unsigned int i = 0; i < table.elements.size(); i++) {
 			elements.push_back(new wstring(*table.elements[i]));
 		}
 	}
-	catch (const std::bad_alloc &e) {
+	catch (const std::bad_alloc &) {
 		error(errorID::outOfMem);
 	}	
 
@@ -57,7 +73,7 @@ Table::Table(const Table& table) {
 
 
 void Table::vectorAssign(const std::vector <std::wstring*>& elements) {
-	for (int i = 0; i < elements.size(); i++) {
+	for (unsigned int i = 0; i < elements.size(); i++) {
 
 		wstring *contents = new wstring[fields];	// create new memory, indipendent from what happens outside this class
 
@@ -84,7 +100,7 @@ Table::Table(const sf::Vector2f& position, int fields, const std::wstring * cons
 	try {
 		this->titleStrings = new wstring[fields];
 	}
-	catch (const std::bad_alloc &e) {
+	catch (const std::bad_alloc &) {
 		error(errorID::outOfMem);
 	}
 
@@ -313,7 +329,7 @@ void Table::render(sf::RenderWindow& window) const {
 	textDraw.setFillColor(sf::Color::Black);
 
 	// draw the title fields
-	for (int j = 0; j < tbl_rowRenderNormalElementLen; j++) { 
+	for (unsigned int j = 0; j < tbl_rowRenderNormalElementLen; j++) { 
 
 		rect = rowRender[j];
 		rect.setPosition(sf::Vector2f(xOffset + rect.getPosition().x, yOffset + rect.getPosition().y));
@@ -329,10 +345,10 @@ void Table::render(sf::RenderWindow& window) const {
 
 	yOffset += rowRender.back().getGlobalBounds().height - mainboxOuterLineThickness;
 
-	for (int i = 0; i < elements.size(); i++) {
+	for (unsigned int i = 0; i < elements.size(); i++) {
 
 
-		for (int j = 0; j < tbl_rowRenderNormalElementLen; j++) { 
+		for (unsigned int j = 0; j < tbl_rowRenderNormalElementLen; j++) {
 
 			rect = rowRender[j];
 
@@ -422,7 +438,7 @@ void Table::renderText(sf::RenderWindow& window, const std::wstring& text, const
 	textDraw.setPosition(rect.getPosition().x + innerMargin, rect.getPosition().y + innerMargin);
 	
 	// get maxsize of string
-	int maxSize = rect.getSize().x - innerMargin * 2;
+	float maxSize = rect.getSize().x - innerMargin * 2;
 
 	// if its bigger than the maxsize, replace the last char with a …
 	if (textDraw.getGlobalBounds().width > maxSize && text.length() > 3) {
@@ -459,7 +475,7 @@ void Table::addElement(const std::wstring * const element) {	// string array is 
 	try {
 		content = new std::wstring[fields];
 	}
-	catch (const std::bad_alloc &e) {
+	catch (const std::bad_alloc &) {
 		delete[] content;
 		error(errorID::outOfMem);
 	}
@@ -492,7 +508,7 @@ void Table::addElement(std::wstring*&& element) {
 	calculateSize();
 }
 
-bool Table::removeElement(int elementID) {
+bool Table::removeElement(unsigned int elementID) {
 	if (elementID >= elements.size()) return false;
 	
 	delete[] elements[elementID];	// free memory
@@ -501,4 +517,15 @@ bool Table::removeElement(int elementID) {
 	calculateSize();
 
 	return true;
+}
+
+
+void Table::handleClick(Vector2i &position) {
+	if (!isClicked(position))
+		return;
+
+#ifdef DEBUG
+	wprintf(L"Table with the first title of '%ls' was clicked!\n",titleStrings[0].c_str());
+#endif // DEBUG
+
 }

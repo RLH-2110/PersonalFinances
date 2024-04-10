@@ -33,6 +33,9 @@
     <ClCompile Include="table.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
+    <ClCompile Include="element.cpp">
+      <Filter>Quelldateien</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\perFin Reqs.txt">
@@ -73,6 +76,9 @@
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="test.h">
+      <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="element.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
   </ItemGroup>
