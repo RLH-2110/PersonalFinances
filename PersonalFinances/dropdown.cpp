@@ -1,4 +1,4 @@
-#include "includes.h";
+#include "includes.h"
 
 using sf::Vector2i;
 using sf::Vector2f;
@@ -34,7 +34,7 @@ Dropdown::Dropdown(const Dropdown& dropdown) {
 		try {
 			this->titleStrings = new wstring[fields];
 		}
-		catch (const std::bad_alloc &e) {
+		catch (const std::bad_alloc&) {
 			error(errorID::outOfMem);
 		}
 
@@ -45,11 +45,11 @@ Dropdown::Dropdown(const Dropdown& dropdown) {
 
 
 	try {	// elements
-		for (int i = 0; i < dropdown.elements.size(); i++) {
+		for (unsigned int i = 0; i < dropdown.elements.size(); i++) {
 			elements.push_back(new wstring(*dropdown.elements[i]));
 		}
 	}
-	catch (const std::bad_alloc &e) {
+	catch (const std::bad_alloc&) {
 		error(errorID::outOfMem);
 	}
 

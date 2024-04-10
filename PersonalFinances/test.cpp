@@ -107,11 +107,11 @@ void tableTests() {
 		std::wstring data2[] = { L"last string!!!!!!!!!!!!!!!!",L"" };
 		barFields.push_back(data2);
 
-		int leftOffset = 4;
+		float leftOffset = 4;
 		bool displaySize = false;
 
-		Table tbl1 = Table(sf::Vector2f(leftOffset, 5), 1, bar, 1, 1, 1);
-		Table tbl2 = Table(sf::Vector2f(leftOffset, 100), 1, std::move(bar), barFields, 1, 1, 1);
+		Table tbl1 = Table(sf::Vector2f(leftOffset, 5.0f), 1, bar, 1, 1, 1);
+		Table tbl2 = Table(sf::Vector2f(leftOffset, 100.0f), 1, std::move(bar), barFields, 1, 1, 1);
 
 
 		std::wstring bar2[] = { L"Ex1", L"Ex2", L"" };
@@ -126,7 +126,7 @@ void tableTests() {
 		std::wstring data5[] = { L"data5",L"data6",L"" };
 		barFields.push_back(data5);
 
-		Table tbl3 = Table(sf::Vector2f(leftOffset, 250), 2, std::move(bar2), barFields, 1, 1, 1);
+		Table tbl3 = Table(sf::Vector2f(leftOffset, 250.0f), 2, std::move(bar2), barFields, 1, 1, 1);
 
 		std::wstring bar3[] = { L"ID", L"ABC", L"123R$",L"" };
 
@@ -140,11 +140,11 @@ void tableTests() {
 		std::wstring data8[] = { L"3",L"GHI",L"789£",L"" };
 		barFields.push_back(data8);
 
-		Table tbl4 = Table(sf::Vector2f(leftOffset, 400), 3, std::move(bar3), barFields, 1, 1, 1);
+		Table tbl4 = Table(sf::Vector2f(leftOffset, 400.0f), 3, std::move(bar3), barFields, 1, 1, 1);
 
-		int i = 1;
-		int j = 1;
-		int l = 1;
+		float i = 1;
+		float j = 1;
+		float l = 1;
 
 		sf::Text status;
 		status.setFont(stdFont.font);
@@ -166,6 +166,15 @@ void tableTests() {
 			{
 				if (event.type == sf::Event::Closed)
 					window.close();
+
+				if (event.type == sf::Event::MouseButtonPressed) {
+					sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+					tbl1.handleClick(mousePos);
+					tbl2.handleClick(mousePos);
+					tbl3.handleClick(mousePos);
+					tbl4.handleClick(mousePos);
+
+				}
 
 				if (event.type == sf::Event::KeyPressed) {
 

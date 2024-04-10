@@ -14,22 +14,7 @@ public:
 	
 	Dropdown();
 	Dropdown(const Dropdown& dropdown);
-	Dropdown& operator=(const Dropdown& other)
-	{
-		// Guard self assignment
-		if (this == &other)
-			return *this;
-
-
-		try {
-			Dropdown ret(other);
-			return ret;
-		}
-		catch (std::bad_alloc) {
-			error(errorID::outOfMem);
-			return *this;
-		}
-	}
+	Dropdown& operator=(const Dropdown& other);
 
 	Dropdown(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings);
 	Dropdown(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements);

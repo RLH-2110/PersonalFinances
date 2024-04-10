@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dropdown.cpp" />
+    <ClCompile Include="element.cpp" />
     <ClCompile Include="error.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="table.cpp" />
@@ -158,6 +159,7 @@
   <ItemGroup>
     <ClInclude Include="commonStructs.h" />
     <ClInclude Include="dropdown.h" />
+    <ClInclude Include="element.h" />
     <ClInclude Include="error.h" />
     <ClInclude Include="table.h" />
     <ClInclude Include="includes.h" />

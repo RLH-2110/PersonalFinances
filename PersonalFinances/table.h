@@ -1,17 +1,17 @@
 #pragma once
 
 #include "includes.h"
+#include "element.h"
 
 #define tbl_mainbox rowRender.back()
 #define tbl_addbox rowRender[rowRender.size() - 2]
 #define tbl_rowRenderNormalElementLen  rowRender.size() - 2
 
-class Table
+class Table : public Element
 {
 protected:
 
 	int fields;
-	sf::Vector2f size;
 
 	// arrays (all indexed by 'fields')
 	std::wstring *titleStrings;
@@ -31,28 +31,13 @@ protected:
 	void calculateSize();
 
 public:
-	sf::Vector2f position;
 	FontData fontData;
 
 	
 
 	Table();
 	Table(const Table& table);
-	Table& operator=(const Table& other)
-	{
-		// Guard self assignment
-		if (this == &other)
-			return *this;
-
-		try {
-			Table ret(other);
-			return ret;
-		}
-		catch (std::bad_alloc) {
-			error(errorID::outOfMem);
-			return *this;
-		}
-	}
+	Table& operator=(const Table& other);
 
 	Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings);
 	Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements);
@@ -76,7 +61,9 @@ public:
 	void addElement(const std::wstring * const element);
 	void addElement(std::wstring*&& element);
 
-	bool removeElement(int elementID);
+	bool removeElement(unsigned int elementID);
+
+	void handleClick(sf::Vector2i & position);
 
 	// getters
 	int getFields() const { return fields; }
