@@ -1,3 +1,4 @@
+/*
 #include "includes.h"
 
 using sf::Vector2i;
@@ -5,12 +6,6 @@ using sf::Vector2f;
 using std::wstring;
 using std::vector;
 
-
-
-/*
-contains unessarry safety checks for now.
-Depending on how I implement stuff later, I might remove them.
-*/
 
 Dropdown::Dropdown() {
 	fields = 0;
@@ -102,3 +97,4 @@ void Dropdown::render(sf::RenderWindow& window) const{
 
 }
 
+*/

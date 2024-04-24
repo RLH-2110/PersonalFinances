@@ -2,6 +2,8 @@
 
 #include "includes.h"
 
+// commented out, since this might need a heavy rework when the table class is done
+/*
 class Dropdown : public Table
 {
 protected:
@@ -32,3 +34,4 @@ public:
 	// setters
 	void setExtended(bool extended) { this->extended = extended; }
 };
+*/

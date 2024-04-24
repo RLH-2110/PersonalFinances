@@ -16,12 +16,15 @@
     <Filter Include="design and planning">
       <UniqueIdentifier>{c0fccecb-47fc-4189-b063-ef349e652bb6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Class Headers">
+      <UniqueIdentifier>{98e8c89c-bcda-4642-8351-de9b6bfcc02f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Classes">
+      <UniqueIdentifier>{b918cccf-8936-477a-89cb-dc673d2955c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="dropdown.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
     <ClCompile Include="error.cpp">
@@ -30,11 +33,14 @@
     <ClCompile Include="test.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="table.cpp">
-      <Filter>Quelldateien</Filter>
+    <ClCompile Include="dropdown.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
     <ClCompile Include="element.cpp">
-      <Filter>Quelldateien</Filter>
+      <Filter>Classes</Filter>
+    </ClCompile>
+    <ClCompile Include="table.cpp">
+      <Filter>Classes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -63,23 +69,23 @@
     <ClInclude Include="error.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="dropdown.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="includes.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="commonStructs.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="table.h">
-      <Filter>Headerdateien</Filter>
-    </ClInclude>
     <ClInclude Include="test.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
+    <ClInclude Include="dropdown.h">
+      <Filter>Class Headers</Filter>
+    </ClInclude>
     <ClInclude Include="element.h">
-      <Filter>Headerdateien</Filter>
+      <Filter>Class Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="table.h">
+      <Filter>Class Headers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

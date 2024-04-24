@@ -95,50 +95,41 @@ void tableTests() {
 
 
 
-		std::wstring bar[] = { L"hello world", L"" };
+		wstrVector bar = { L"hello world" };
 
-		std::vector<std::wstring*> barFields;
+		std::vector<wstrVector> barFields;
 
 		// fill in some valid test data
-		std::wstring data[] = { L"This1",L"" };
-		barFields.push_back(data);
-		std::wstring data1[] = { L"nanam",L"" };
-		barFields.push_back(data1);
-		std::wstring data2[] = { L"last string!!!!!!!!!!!!!!!!",L"" };
-		barFields.push_back(data2);
+		barFields.emplace_back(wstrVector{L"This1"});
+		barFields.emplace_back(wstrVector{L"nanam"});
+		barFields.emplace_back(wstrVector{ L"last string!!!!!!!!!!!!!!!!" });
 
 		float leftOffset = 4;
 		bool displaySize = false;
 
 		Table tbl1 = Table(sf::Vector2f(leftOffset, 5.0f), 1, bar, 1, 1, 1);
-		Table tbl2 = Table(sf::Vector2f(leftOffset, 100.0f), 1, std::move(bar), barFields, 1, 1, 1);
+		Table tbl2 = Table(sf::Vector2f(leftOffset, 100.0f), 1, bar, barFields, 1, 1, 1);
 
 
-		std::wstring bar2[] = { L"Ex1", L"Ex2", L"" };
+		wstrVector bar2 = { L"Ex1 ", L"Ex2 "};
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::wstring data3[] = { L"data1",L"data2",L"" };
-		barFields.push_back(data3);
-		std::wstring data4[] = { L"data3",L"data4",L"" };
-		barFields.push_back(data4);
-		std::wstring data5[] = { L"data5",L"data6",L"" };
-		barFields.push_back(data5);
+		barFields.emplace_back(wstrVector{ L"data1", L"data2" });
+		barFields.emplace_back(wstrVector{ L"data3", L"data4" });
+		barFields.emplace_back(wstrVector{ L"data5", L"data6" });
 
 		Table tbl3 = Table(sf::Vector2f(leftOffset, 250.0f), 2, std::move(bar2), barFields, 1, 1, 1);
 
-		std::wstring bar3[] = { L"ID", L"ABC", L"123R$",L"" };
+		wstrVector bar3 = { L"ID", L"ABC", L"123R$"};
 
 		barFields.clear();
 
 		// fill in some valid test data
-		std::wstring data6[] = { L"1",L"ABC",L"123€",L"" };
-		barFields.push_back(data6);
-		std::wstring data7[] = { L"2",L"DEF",L"456₱",L"" };
-		barFields.push_back(data7);
-		std::wstring data8[] = { L"3",L"GHI",L"789£",L"" };
-		barFields.push_back(data8);
+		barFields.emplace_back(wstrVector{L"1", L"ABC", L"123€"});
+		barFields.emplace_back(wstrVector{L"2", L"DEF", L"456₱"});
+		barFields.emplace_back(wstrVector{L"3", L"GHI", L"789£"});
 
 		Table tbl4 = Table(sf::Vector2f(leftOffset, 400.0f), 3, std::move(bar3), barFields, 1, 1, 1);
 
@@ -182,7 +173,7 @@ void tableTests() {
 						displaySize = !displaySize;
 
 					if (event.key.code == sf::Keyboard::LShift) {
-						tbl4.addElement(new std::wstring[4]{ L"MoreData1",L"MoreData2",L"MoreData3",L"" });
+						tbl4.addElement( wstrVector { L"MoreData1",L"MoreData2",L"MoreData3"});
 					}
 
 					if (event.key.code == sf::Keyboard::RShift) {

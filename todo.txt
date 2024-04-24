@@ -2,6 +2,4 @@ create drop down menue
 
 	TODO: render text
 
-	TODO: change some string arrays to vectors?
 	TODO: add the colaplse box to the dropdown
-	TODO: save the dopown clickable area?

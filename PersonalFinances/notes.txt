@@ -1,9 +1,1 @@
-commit message:
-Text rendering and WString support
-
-added Text rendering
-changed strings into wstrings
-made sure colums are at lest 4 characters long
-modiefed font to include new characters
-modiefed font error message
-added fontPath macro
+commit message: Converted WString arrays into WString vectors

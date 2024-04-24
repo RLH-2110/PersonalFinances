@@ -33,7 +33,6 @@ Table& Table::operator=(const Table& other)
 }
 
 Table::Table(const Table& table) {
-	
 	fields = table.fields;
 	size = table.size;
 
@@ -46,134 +45,45 @@ Table::Table(const Table& table) {
 
 	rowRender = table.rowRender;
 
-	{	//	titleStrings //
-		try {
-			this->titleStrings = new wstring[fields];
-		}
-		catch (const std::bad_alloc&) {
-			error(errorID::outOfMem);
-		}
-
-		for (int i = 0; i < fields; i++) {
-			titleStrings[i] = table.titleStrings[i];
-		}
-	}
-
-	
-	try {	// elements
-		for (unsigned int i = 0; i < table.elements.size(); i++) {
-			elements.push_back(new wstring(*table.elements[i]));
-		}
-	}
-	catch (const std::bad_alloc &) {
-		error(errorID::outOfMem);
-	}	
-
+	titleStrings = table.titleStrings;
+	elements = table.elements;
 }
 
 
-void Table::vectorAssign(const std::vector <std::wstring*>& elements) {
-	for (unsigned int i = 0; i < elements.size(); i++) {
-
-		wstring *contents = new wstring[fields];	// create new memory, indipendent from what happens outside this class
-
-		//copy the data in the new memory
-
-		// check if the string array metches the number of fields, and add the strings to contents
-		for (int j = 0; j < fields; j++) {
-			if (elements[i][j] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
-				delete[] contents; contents = nullptr;
-				error(errorID::arraySizeMismatch);
-			}
-			contents[j] = elements[i][j];
-		}
-
-		this->elements.push_back(contents); // save it in the vector
-	}
+void Table::vectorAssign(const std::vector <wstrVector>& elements) {
+	this->elements = elements;
 	calculateSize();
 }
 
-Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
+Table::Table(const sf::Vector2f& position, int fields, const wstrVector& titleStrings) {
 	this->position = position;
 	this->fields = fields;
+	this->titleStrings = titleStrings;
+	
 
-	try {
-		this->titleStrings = new wstring[fields];
-	}
-	catch (const std::bad_alloc &) {
-		error(errorID::outOfMem);
-	}
-
-	// check if the string array metches the number of fields, and add the strings to the list.
-	for (int i = 0; i < fields; i++) {
-		if (titleStrings[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
-			delete[] this->titleStrings; this->titleStrings = nullptr;
-			error(errorID::arraySizeMismatch);
-		}
-		this->titleStrings[i] = titleStrings[i];
-	}
-
+	if (titleStrings.size() != fields) error(errorID::arraySizeMismatch);
+	
 	fontData = stdFont;
 
 	generateRenderInfo();
 }
 
-Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements)
+Table::Table(const sf::Vector2f& position, int fields, const wstrVector& titleStrings, const std::vector <wstrVector>& elements)
 	: Table(position, fields, titleStrings)
 {
 	vectorAssign(elements);
 }
 
-Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, const wstrVector& titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-Table::Table(const sf::Vector2f& position, int fields, const std::wstring * const titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
+Table::Table(const sf::Vector2f& position, int fields, const wstrVector& titleStrings, const std::vector <wstrVector>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
 	: Table(position, fields, titleStrings, elements)
 {
 	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
 }
-
-Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings) { // its expected that the array is terminated by an emptry string. emptry string terminator is optinal, but its better than relying on the fields integer being correct to determin the array lenght.
-	this->position = position;
-	this->fields = fields;
-
-
-	this->titleStrings = titleStrings;
-	titleStrings = nullptr;
-
-
-	// check if the string array metches the number of fields, and add the strings to the list.
-	for (int i = 0; i < fields; i++) {
-		if (this->titleStrings[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
-			delete[] this->titleStrings; this->titleStrings = nullptr;
-			error(errorID::arraySizeMismatch);
-		}
-	}
-
-	fontData = stdFont;
-
-	generateRenderInfo();
-}
-
-Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const std::vector <std::wstring*>& elements)
-	: Table(position, fields, titleStrings)
-{
-	vectorAssign(elements);
-}
-
-Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
-	: Table(position, fields, titleStrings) 
-{
-	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
-}
-Table::Table(const sf::Vector2f& position, int fields, std::wstring*&& titleStrings, const std::vector <std::wstring*>& elements, const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness)
-: Table(position, fields, titleStrings, elements)
-{
-	initBorder(innerMargin, outerLineThickness, mainboxOuterLineThickness);
-}
-
 
 void Table::initBorder(const float innerMargin, const float outerLineThickness, const float mainboxOuterLineThickness) {
 	this->innerMargin = innerMargin;
@@ -183,12 +93,10 @@ void Table::initBorder(const float innerMargin, const float outerLineThickness, 
 
 
 Table::~Table() {
-	delete[] titleStrings; titleStrings = nullptr;
-
-	elements.clear();
-
-	while (!elements.empty()) {	// deallocate all pointers and remove all elements from the vector
-		free(elements.back());
+	titleStrings.clear();
+	
+	while (!elements.empty()) {	// clear all vectors ( maybe not nessesarry )
+		elements.back().clear();
 		elements.pop_back();
 	}
 
@@ -469,41 +377,10 @@ void Table::renderText(sf::RenderWindow& window, const std::wstring& text, const
 
 
 
-void Table::addElement(const std::wstring * const element) {	// string array is "" terminated
-	std::wstring *content = nullptr;
+void Table::addElement(const wstrVector& element) {
+	if (element.size() != fields) error(errorID::arraySizeMismatch);
 
-	try {
-		content = new std::wstring[fields];
-	}
-	catch (const std::bad_alloc &) {
-		delete[] content;
-		error(errorID::outOfMem);
-	}
-
-	// check if the string array metches the number of fields, and add the strings to the list.
-	for (int i = 0; i < fields; i++) {
-		if (element[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
-			delete[] content; content = nullptr;
-			error(errorID::arraySizeMismatch);
-		}
-		content[i] = element[i];
-	}
-
-	calculateSize();
-}
-
-void Table::addElement(std::wstring*&& element) {
-	elements.push_back(element);
-	element = nullptr;
-
-
-	// check if the string array metches the number of fields, and add the strings to the list.
-	for (int i = 0; i < fields; i++) {
-		if (elements.back()[i] == std::wstring(L"")) {	// check if the current element is an empty string (terminator)
-			delete[] elements.back(); elements.back() = nullptr;
-			error(errorID::arraySizeMismatch);
-		}
-	}
+	this->elements.push_back(element);
 
 	calculateSize();
 }
@@ -511,7 +388,7 @@ void Table::addElement(std::wstring*&& element) {
 bool Table::removeElement(unsigned int elementID) {
 	if (elementID >= elements.size()) return false;
 	
-	delete[] elements[elementID];	// free memory
+	elements[elementID].clear(); // clear vector (maybe optional)
 	elements.erase(elements.begin() + elementID);
 	
 	calculateSize();
